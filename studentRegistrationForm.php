@@ -9,26 +9,25 @@
               </div>
               <div class="login-userheading">
                 <h3>Create an Account</h3>
-                <h4>Continue where you left off</h4>
               </div>
               <div class="form-login">
                 <label>Roll Number</label>
                 <div class="form-addons">
-                  <input type="text" placeholder="Enter your roll number" />
+                  <input type="text" name="roll_number" id="roll_number" placeholder="Enter your roll number" />
                   <img src="assets/img/icons/users1.svg" alt="img" />
                 </div>
               </div>
               <div class="form-login">
                 <label>Full Name</label>
                 <div class="form-addons">
-                  <input type="text" placeholder="Enter your full name" />
+                  <input type="text" name="student_name" id="student_name" placeholder="Enter your full name" />
                   <img src="assets/img/icons/users1.svg" alt="img" />
                 </div>
               </div>
               <div class="form-login">
                 <label>Email</label>
                 <div class="form-addons">
-                  <input type="text" placeholder="Enter your email address" />
+                  <input type="text" name="email" id="email" placeholder="Enter your email address" />
                   <img src="assets/img/icons/mail.svg" alt="img" />
                 </div>
               </div>
@@ -37,8 +36,8 @@
                 <div class="pass-group">
                   <input
                     type="password"
-                    class="pass-input"
-                    placeholder="Enter your password"
+                    class="pass-input" name="password"
+                    placeholder="Enter your password" id="password"
                   />
                   <span class="fas toggle-password fa-eye-slash"></span>
                 </div>
@@ -48,14 +47,14 @@
                 <div class="pass-group">
                   <input
                     type="password"
-                    class="pass-input"
+                    class="pass-input" name = "confirm_password" id="password"
                     placeholder="Enter your password"
                   />
                   <span class="fas toggle-password fa-eye-slash"></span>
                 </div>
               </div>
               <div class="form-login">
-                <a class="btn btn-login">Sign Up</a>
+                <button class="btn btn-login" class="signup" onclick="buttonclicked()" name="sign_up">Sign up</button>
               </div>
               <div class="signinform text-center">
                 <h4>
@@ -71,3 +70,60 @@
         </div>
       </div>
     </div>
+
+    <script>
+
+      $(document).ready(() => {
+        
+        const buttonclicked = () =>{
+          alert("button clicked");
+        }
+        $(".signup").on("click",() => {
+          alert("button clciked");
+        })
+
+        $("[name='sign_up']").on("click", () =>{
+
+          student_name = $("#student_name").val();
+          if(student_name == ""){
+            add_error("student_name", "Enter the Student Name");
+          }
+
+          roll_number = $("#roll_number").val();
+          if(roll_number == ""){
+            add_error("roll_number", "Enter the roll number");
+          }
+
+          email = $("#email").val();
+          if(email == ""){
+            add_error("email", "Enter the email id");
+          }
+
+          if(!valid_email(email)){
+            add_error("email", "Enter a valid college mail id")
+          }
+
+          password = $("#password").val();
+          if(password == ""){
+            add_error("password", "Enter the password");
+          }
+
+          if(!valid_password(password)){
+            add_error("password","week password");
+          }
+
+          confirm_password = $("#confirm_password").val();
+          if(confirm_password == ""){
+            add_error("confirm_password", "Enter the password");
+          }
+
+          if(password !== confirm_password){
+            add_error("confirm_password", "Password does not match");
+          }
+
+        })
+
+
+
+      });
+    </script>

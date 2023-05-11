@@ -30,7 +30,7 @@
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label">Roll Number</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="roll_number" class="form-control" />
+                                    <input type="text" name="roll_number" class="form-control roll_number" />
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -45,7 +45,7 @@
                                 <div class="col-lg-9">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="gender" id="gender_male"
-                                            value="option1" />
+                                            value="option1" checked/>
                                         <label class="form-check-label" for="gender_male">
                                             Male
                                         </label>
@@ -62,7 +62,7 @@
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label">Blood Group</label>
                                 <div class="col-lg-9">
-                                    <select class="form-select" required aria-label="select example" name="blood_group">
+                                    <select class="form-select blood_group"  aria-label="select example" name="blood_group">
                                         <option selected hidden value="">Blood Group</option>
                                         <option value="O+">O+</option>
                                         <option value="A+">A+</option>
@@ -78,7 +78,7 @@
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label">Branch</label>
                                 <div class="col-lg-9">
-                                    <select class="form-select" required aria-label="select example" name = "branch">
+                                    <select class="form-select branch"  aria-label="select example" name = "branch">
                                         <option selected hidden value="">Branch</option>
                                         <option value="BE">B.E</option>
                                         <option value="BTECH">B.Tech</option>
@@ -93,7 +93,7 @@
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label">Course</label>
                                 <div class="col-lg-9">
-                                    <select class="form-select" required aria-label="select example" name="course">
+                                    <select class="form-select course"  aria-label="select example" name="course">
                                         <option selected hidden value="">Course</option>
                                         <option value="CSE">Computer Science Engineering</option>
                                         <option value="IT">Information Technology</option>
@@ -109,13 +109,13 @@
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label">Password</label>
                                 <div class="col-lg-9">
-                                    <input type="password" name="password" class="form-control" />
+                                    <input type="password" name="password" class="form-control password" />
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label">Repeat Password</label>
                                 <div class="col-lg-9">
-                                    <input type="password" name="confirm_password" class="form-control" />
+                                    <input type="password" name="confirm_password" class="form-control confirm_password" />
                                 </div>
                             </div>
                             <div class="text-end">
@@ -135,8 +135,11 @@
 
 
 
+<?php
+//  include "./files/script.html";?>
 <script>
 $(document).ready(() => {
+
     $("#form").on("submit", (event) => {
         // preventing the form submission
         event.preventDefault();
@@ -145,50 +148,34 @@ $(document).ready(() => {
         remove_error();
 
         //   validating the form data
-        $student_name = $("[name = 'student_name']").val();
-        if ($student_name == "") {
-            add_error("student_name", "Enter the student name");
-        }
 
-        $roll_number = $("[name = 'roll_number']").val();
-        if ($roll_number == "") {
-            add_error("roll_number", "Enter the roll number");
+        // check student name
+        check_value("student_name","Enter student name");
+        
+        // check roll number
+        check_value("roll_number","Enter roll number", "input");
+        
+        // check email id
+        check_value("email","Enter college email");
+        
+        check_value("blood_group","Select Blood Group", "select");
+        
+        check_value("branch","Select branch");
+        
+        check_value("course","Select Course");
+        
+        check_value("gender","Enter Blood Group");
+        
+        check_value("password", "Enter the password");
+        
+        check_value("confirm_password", "Enter the confirm password");
+        
+        password = $(".password").val();
+        confirm_password = $(".confirm_password").val();
+        if(confirm_password != "" && password != confirm_password){
+            add_error("confirm_password","Password does not match");
         }
-
-        $email_id = $("[name = 'email_id']").val();
-        if ($email_id == "") {
-            add_error("email_id", "Enter the email id");
-        }
-
-        $gender = $("[name = 'gender']").val();
-        if ($gender == "") {
-            add_error("gender", "Select the gender");
-        }
-
-        $blood_group = $("select[name = 'blood_group']").val();
-        if ($blood_group == "") {
-            add_error("blood_group", "Selct the blood group", "select");
-        }
-
-        $branch = $("select[name = 'branch']").val();
-        if ($branch == "") {
-            add_error("branch", "Select the branch", "select");
-        }
-
-        $course = $("select[name = 'course']").val();
-        if ($course == "") {
-            // add_error("course", "Select the course", "select");
-        }
-
-        $password = $("[name = 'password']").val();
-        if ($password == "") {
-            add_error("password", "Enter the password");
-        }
-
-        $confirm_password = $("[name = 'confirm_password']").val();
-        if ($confirm_password == "") {
-            add_error("confirm_password", "Password doesn't match");
-        }
+         
 
 
         // getting the form data and convert into the array
