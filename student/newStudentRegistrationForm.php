@@ -36,23 +36,25 @@
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label">Email Address</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="email_id" class="form-control" />
+                                    <input type="text" name="email_id" class="form-control email_id" />
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label">Gender</label>
-                                <div class="col-lg-9">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="gender" id="gender_male"
-                                            value="option1" checked/>
-                                        <label class="form-check-label" for="gender_male">
-                                            Male
-                                        </label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
+                                <div class="col-lg-9 ">
+                                    <span class="gender">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="gender" id="gender_male"
+                                                value="boy" checked/>
+                                            <label class="form-check-label" for="gender_male">
+                                                Male
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                    </span>
                                         <input class="form-check-input" type="radio" name="gender" id="gender_female"
-                                            value="option2" />
+                                            value="girl" />
                                         <label class="form-check-label" for="gender_female">
                                             Female
                                         </label>
@@ -150,21 +152,19 @@ $(document).ready(() => {
         //   validating the form data
 
         // check student name
-        check_value("student_name","Enter student name");
+        check_value("student_name","Enter student name","input");
         
         // check roll number
         check_value("roll_number","Enter roll number", "input");
         
         // check email id
-        check_value("email","Enter college email");
+        check_value("email_id","Enter college email");
         
         check_value("blood_group","Select Blood Group", "select");
         
         check_value("branch","Select branch");
         
         check_value("course","Select Course");
-        
-        check_value("gender","Enter Blood Group");
         
         check_value("password", "Enter the password");
         

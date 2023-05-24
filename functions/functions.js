@@ -13,8 +13,6 @@ const add_error = (field_name, message, type = "class") => {
 
     else if (type === "input" || type === "select") {
         element = $(`${type}[name = "${field_name}"]`);
-        console.log(field_name)
-        // console.log(element);
     }
 
     element.addClass("is-invalid");
@@ -39,8 +37,24 @@ const is_valid_email = (email) => {
 }
 
 const check_value = (element, error = "Fill the input field", type = "class") => {
-    $input_field = $(`.${element}`).val();
+    
+    
+    switch(type){
+
+        case "input":
+        case "radio":
+            $input_field = $(`input[name = "${element}"]`).val();
+            break;
+        case "select":
+            $input_field = $(`${type}[name = "${element}"]`).val();
+            break;
+        default:    
+            $input_field = $(`.${element}`).val();
+    }
+
+
     if ($input_field == "") {
         add_error(element, error, type);
     }
+    console.log(element + "  " + $input_field);
 }
