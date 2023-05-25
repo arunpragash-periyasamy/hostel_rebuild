@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="message"></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    //     var name = "arunpragash";
+    
+    // // Make AJAX request
+    // $.ajax({
+    //   url: 'Greeting.php',
+    //   type: 'POST',
+    //   data: { name: name },
+    //   dataType: 'json',
+    //   success: function(response) {
+    //     // Display the greeting message
+    //     $('#message').text(response.message);
+    //   },
+    //   error: function(xhr, status, error) {
+    //     // Display error message
+    //     $('#message').text('Error: ' + xhr.responseText);
+    //   }
+    // });
+
+    var name = "arunpragash";
+
+// Make AJAX request
+$.ajax({
+  url: 'Greeting.php',
+  type: 'POST',
+  data: { name: name, message : "welcome bro" },
+  dataType: 'json',
+  success: function(response) {
+    // Display the greeting message
+    $('#message').text(response.message);
+  },
+  error: function(xhr, status, error) {
+    // Display error message
+    $('#message').text('Error: ' + xhr.responseText);
+  }
+});
+
+    </script>
+</body>
+</html>

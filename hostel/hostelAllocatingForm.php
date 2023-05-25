@@ -1,4 +1,3 @@
-        <!-- main content start -->
 
         <div class="page-wrapper cardhead ">
             <div class="content container-fluid">
@@ -157,13 +156,5 @@
                 </div>
             </div>
         </div>
-        <!-- main content ends -->
-
-
-    <script>
-        $(document).ready(function() {
-            // activate the sidebar
-            $(".header").removeClass("active");
-            $(".hostelAllocating").addClass("active");
-        });
-    </script>
+        
+        

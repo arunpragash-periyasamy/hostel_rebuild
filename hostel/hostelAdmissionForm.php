@@ -264,37 +264,43 @@
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label">Address Line 1</label>
                                         <div class="col-lg-9">
-                                            <input type="text" class="form-control guardian_address_line_1"  name = "guardian_address_line_1" id = "guardian_address_line_1" />
+                                            <input type="text" class="form-control guardian_address_line_1"
+                                                name="guardian_address_line_1" id="guardian_address_line_1" />
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label">Address Line 2</label>
                                         <div class="col-lg-9">
-                                            <input type="text" class="form-control guardian_address_line_2"  name = "guardian_address_line_2" id = "guardian_address_line_2" />
+                                            <input type="text" class="form-control guardian_address_line_2"
+                                                name="guardian_address_line_2" id="guardian_address_line_2" />
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label">Address Line 3</label>
                                         <div class="col-lg-9">
-                                            <input type="text" class="form-control guardian_address_line_3"  name = "guardian_address_line_3" id = "guardian_address_line_3" />
+                                            <input type="text" class="form-control guardian_address_line_3"
+                                                name="guardian_address_line_3" id="guardian_address_line_3" />
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label">State</label>
                                         <div class="col-lg-9">
-                                            <input type="text" class="form-control guardian_state"  name = "guardian_state" id = "guardian_state" />
+                                            <input type="text" class="form-control guardian_state" name="guardian_state"
+                                                id="guardian_state" />
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label">City</label>
                                         <div class="col-lg-9">
-                                            <input type="text" class="form-control guardian_city"  name = "guardian_city" id = "guardian_city" />
+                                            <input type="text" class="form-control guardian_city" name="guardian_city"
+                                                id="guardian_city" />
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label">PIN Code</label>
                                         <div class="col-lg-9">
-                                            <input type="text" class="form-control guardian_pin_code"  name = "guardian_pin_code" id = "guardian_pin_code" />
+                                            <input type="text" class="form-control guardian_pin_code"
+                                                name="guardian_pin_code" id="guardian_pin_code" />
                                         </div>
                                     </div>
                                 </div>
@@ -307,7 +313,8 @@
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label">KVB Account Number</label>
                                         <div class="col-lg-9">
-                                            <input type="text" class="form-control kvb_account_number"  name = "kvb_account_number" id = "kvb_account_number"/>
+                                            <input type="text" class="form-control kvb_account_number"
+                                                name="kvb_account_number" id="kvb_account_number" />
                                         </div>
                                     </div>
 
@@ -370,33 +377,36 @@
 
 <script>
 
-    $("#hostelAdmissionForm").on("submit", (event) =>{
+    $("#hostelAdmissionForm").on("submit", (event) => {
         event.preventDefault();
-        
+
         // remove error if any
         remove_error();
 
-        // check for the input fields
-        check_value("student_name","Enter the student name");
-        check_value("roll_number","Enter the roll number");
-        check_value("date_of_birth","Enter the date of birth");
-        check_value("blood_group","Enter the Blood Group");
-        check_value("course","Enter the course");
-        check_value("branch","Enter the branch");
-        check_value("year","Enter the year");
-        check_value("email_id","Enter the email id");
-        check_value("mobile_number","Enter the mobile number");
-        check_value("parent_name","Enter the parent name");
-        check_value("parent_mobile_number","Enter the parent mobile number");
-        check_value("parent_occupation","Enter the parent occupation");
-        check_value("parent_relationship","Select the parent relationship");
-        check_value("parent_address_line_1","Enter the parent address line 1");
-        check_value("parent_address_line_2","Enter the parent address line 2");
-        check_value("parent_address_line_3","Enter the parent address line 3");
-        check_value("parent_state","Enter the parent state");
-        check_value("parent_city","Enter the parent city");
-        check_value("parent_pin_code","Enter the parent pin code");
-        check_value("kvb_account_number","Enter the account number");
         
+        // check for the input fields
+        check_value("student_name", "Enter the student name");
+        check_value("roll_number", "Enter the roll number");
+        check_value("date_of_birth", "Enter the date of birth");
+        check_value("blood_group", "Enter the Blood Group");
+        check_value("course", "Enter the course");
+        check_value("branch", "Enter the branch");
+        check_value("year", "Enter the year");
+        check_value("email_id", "Enter the email id");
+        check_value("mobile_number", "Enter the mobile number");
+        check_value("parent_name", "Enter the parent name");
+        check_value("parent_mobile_number", "Enter the parent mobile number");
+        check_value("parent_occupation", "Enter the parent occupation");
+        check_value("parent_relationship", "Select the parent relationship");
+        check_value("parent_address_line_1", "Enter the parent address line 1");
+        check_value("parent_address_line_2", "Enter the parent address line 2");
+        check_value("parent_address_line_3", "Enter the parent address line 3");
+        check_value("parent_state", "Enter the parent state");
+        check_value("parent_city", "Enter the parent city");
+        check_value("parent_pin_code", "Enter the parent pin code");
+        check_value("kvb_account_number", "Enter the account number");
+
+        
+
     });
 </script>

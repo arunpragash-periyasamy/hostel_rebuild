@@ -1,141 +1,143 @@
 <?php
 
+class DB
+{
+    private $hostname;
+    private $username;
+    private $password;
+    private $dbname;
+    private $port;
+    private $connection;
+    public function __construct($dbname, $hostname = "localhost", $username = "root", $password = "", $port = 3306)
+    {
+        $this->dbname = $dbname;
+        $this->hostname = $hostname;
+        $this->username = $username;
+        $this->password = $password;
+        $this->port = $port;
+        $this->connection = mysqli_connect($this->hostname, $this->username, $this->password);
 
-// creating class for sql operations crud
-class DB{
-    private $db = null;
-    private $hostname = null;
-    private $username = null;
-    private $password = null;
-    private $connection = null;
-    private $port = null;
+        $query = "CREATE DATABASE IF NOT EXISTS $dbname";
+        mysqli_query($this->connection, $query);
+        $this->connection = mysqli_connect($this->hostname, $this->username, $this->password, $dbname, $port);
 
-
-    // constructor for creating the new object of the database with the details of the database name, username , password , hostname and port;
-    
-    function __construct($username, $password, $db, $hostname = "localhost", $port = 3306){
-
-        // set the values from the user to the class variables.
-        $this -> db = $db;
-        $this -> port = $port;
-        $this -> username = $username;
-        $this -> password = $password;
-        $this -> hostname = $hostname;
-
-        $this -> createDBConnection();
     }
 
 
-    // function to create Database Connection and create a connection
-    private function createDBConnection(){
+    function insert($table, $form_data)
+    {
+        // separate the array keys and values
 
-        $this -> connection = new mysqli($this -> hostname, $this -> username, $this -> password);
-        
-        $sql = `CREATE Database IF NOT exists  ` . $this -> db;
-        if(! $this -> connection -> query($sql)){
-            die("Unable to connect the Database");
+        foreach ($form_data as $data) {
+            $fields[] = $data['name'];
+            $values[] = $data['value'];
         }
 
-        $this -> connection = new mysqli($this -> hostname, $this -> username, $this -> password, $this -> db, $this -> port);
+        // make the keys and values in string
 
-        if($this -> connection -> connect_error){
-            die("Unable to connect the mysql ". $this -> connection -> connect_error);
+        // add a column for creating table
+        $create_fields = "id int(10),";
+        foreach ($fields as $field) {
+            if($field != "id"){
+                $create_fields .= "`$field` TEXT, ";
+            }
         }
+        $create_fields .= "PRIMARY KEY(id)";
 
-    }
-
-
-    // function to close the mysql connection 
-    function __destruct(){
-        if($this -> connection != null){
-            $this -> connection -> close();
-        }
-        $this -> connection = null;
-    }
-
-    // function to create the table with the table_name(string) and field_names (array)
-    private function createTable($table_name, $field_names){
-
-        $field_names = str_ireplace(",", "TEXT, ",$field_names);
-        
-        if($this -> connection -> connect_error){
-            die("Unable to connect the mysqli" . $this -> connection -> connect_error);
-        }
-
-        $sql = `CREATE TABLE IF NOT exists $table_name($field_names)`;
-        if(! $this -> connection -> query($sql)){
-            die("Unable to Create Database");
-        }
-    }
-
-
-    // function to insert the data into the table
-    public function insert($table_name, $data, $multiple_records = "false"){
-
-        $fields = implode(",", array_keys($data));
-        $values = implode(",", array_values($data));
-        
-        $this -> createTable($table_name, $fields);
-
-        $query = `INSERT INTO $table_name($fields), VALUES ($values);`;
-        $this -> connection -> query($query);
-    }
-
-    // function to update the data
-    public function update($tablename, $values, $condition){
-
-
-        $query = `UPDATE $tablename SET $values WHERE $condition`;
-        $this -> connection -> query($query);
-    }
-
-
-
-    // function to insert the data into the table
-    public function insertUpdate($table_name, $data, $multiple_records = "false"){
-
-
-        $fields = implode(",", array_keys($data));
-        $values = implode(",", array_values($data));
-        
-        $this -> createTable($table_name, $fields);
-        
-        $update_data = "";
-        
-        foreach($data as $field => $value){
-            $update_data .= `$field = $value, `;
-        }
-        // remove last comma;
-        $last_position = strlen($update_data);
-        $update_data = substr($update_data, 0, $last_position);
+        // create table if not exists
+        $query = "CREATE TABLE IF NOT EXISTS $table ($create_fields)";
+        mysqli_query($this->connection, $query);
         
 
-        $query = `INSERT INTO $table_name($fields), VALUES ($values) ON DUPLICATE KEY UPDATE $update_data;`;
-        $this -> connection -> query($query);
-    }
+        // check if the column is already exists or not 
 
-    // function to delete the data from the table
-    public function delete($tablename, $condition = null){
-        if($condition != null){
-            $query = `DELETE FROM $tablename WHERE $condition`;
-            $this -> connection -> query($query);
-        }else{
-            echo "No condition is provided to delete";
+        $query = "SHOW COLUMNS from $table";
+        $results = mysqli_query($this-> connection, $query);
+
+        if($results){
+            $results = mysqli_fetch_all($results, MYSQLI_ASSOC);
+            $existing_column = array_column($results, 'Fields');
+            $new_column = array_diff($existing_column, $fields);
         }
+
+        $add_column = "";
+        foreach($new_column as $column){
+            $add_column .= "ADD COLUMN $column,";
+        }
+        $add_column = rtrim($add_column, ",");
+
+        // add column if not exists
+        $query = "ALTER TABLE $table $add_column;";
+        mysqli_query($this->connection, $query);
+        
+
+        
+        foreach($fields as $field){
+            $update[] = "$field = VALUES($field)";
+        }
+        
+        $update_query = implode(",", $update);
+        $fields = implode(", ", $fields);
+        $values = "'" . implode("','", $values) . "'";
+
+
+
+        $query = "INSERT INTO $table ($fields) VALUES ($values) ON DUPLICATE KEY UPDATE $update_query;";
+        mysqli_query($this->connection, $query);
     }
 
-    // function to delete all the records from the table
-    public function deleteAll($tablename){
-        $query = `DELETE $tablename`;
-        $this -> connection -> query($query);
-    }
 }
 
 
-$dbconnection = new DB("kechostel","konguhostels","Funtime");
-$table_name = "student";
-$column = "student_name Text, roll_number Text, email Text, password Text";
-$dbconnection -> createTable($table_name, $column);
-$dbconnection -> insert("student", array("name" => "arunpragash", "roll_number" => "19isr007", "email" => "arunpragashap.19msc@kongu.edu", "password" => "arun@1234"));
+
+// // get method
+// if ($_SERVER['REQUEST_METHOD'] === "GET") {
+
+// }
+
+$obj = new DB("hostel", "localhost", "kechostel", "konguhostels");
+
+
+// post method
+if ($_SERVER['REQUEST_METHOD'] === "POST") {
+    // get the request data
+
+    $tablename = $_POST['table_name'];
+    $form_data = $_POST['form_data'];
+    $obj->insert($tablename, $form_data);
+
+    $response = array(
+        'success' => true,
+        'message' => 'Resource inserted successfully.'
+    );
+    header('Content-Type: application/json');
+    http_response_code(200);
+
+    echo json_encode($response);
+
+}
+
+
+// update method
+// if ($_SERVER['REQUEST_METHOD'] === "PUT") {
+
+// }
+
+// // delete method
+// if ($_SERVER['REQUEST_METHOD'] === "DELETE") {
+
+// }
+
+
+
+// $fields = array("hostel_id", "hostel_name", "gender", "contact_info");
+// $values = array("1", "Boys Hostel 1", "Boys", "99449933");
+
+// $data = array_combine($fields, $values);
+
+// print_r($data);
+
+// $obj -> insert("student", $data);
+
 
 ?>
