@@ -120,7 +120,7 @@
                             <input type="password" name="confirm_password" class="form-control confirm_password" />
                         </div>
                     </div>
-                    <input type="number" name="id" value="0">
+                    <input type="number" name="id" value="0" hidden>
                     <div class="text-end">
                         <button type="submit" class="btn btn-primary">
                             Submit

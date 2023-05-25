@@ -1,19 +1,21 @@
 <?php
 
-class DB
+class DBDev
 {
     private $hostname;
     private $username;
     private $password;
     private $dbname;
+    private $table_name;
     private $port;
     private $connection;
-    public function __construct($dbname, $hostname = "localhost", $username = "root", $password = "", $port = 3306)
+    public function __construct($dbname, $hostname = "localhost", $username = "root", $password = "", $table_name="", $port = 3306)
     {
         $this->dbname = $dbname;
         $this->hostname = $hostname;
         $this->username = $username;
         $this->password = $password;
+        $this->table_name = $table_name;
         $this->port = $port;
         $this->connection = mysqli_connect($this->hostname, $this->username, $this->password);
 
@@ -24,7 +26,48 @@ class DB
     }
 
 
-    function insert($table, $form_data)
+    private function create_table($fields){
+                // add a column for creating table
+                $create_fields = "id int(10),";
+                foreach ($fields as $field) {
+                    if($field != "id"){
+                        $create_fields .= "`$field` TEXT, ";
+                    }
+                }
+                $create_fields .= "PRIMARY KEY(id)";
+        
+                // create table if not exists
+                $query = "CREATE TABLE IF NOT EXISTS $this->table_name ($create_fields)";
+                mysqli_query($this->connection, $query);
+                
+        
+                // check if the column is already exists or not 
+        
+                $query = "SHOW COLUMNS from $this->table_name";
+                $results = mysqli_query($this-> connection, $query);
+        
+                if($results){
+                    $results = mysqli_fetch_all($results, MYSQLI_ASSOC);
+                    $existing_column = array_column($results, 'Field');
+                    $new_column = array_diff($fields, $existing_column);
+                }
+
+
+                if($new_column){
+                    $add_column = "";
+                    foreach($new_column as $column){
+                        $add_column .= "ADD COLUMN $column text,";
+                    }
+                    $add_column = rtrim($add_column, ",");
+            
+                    // add column if not exists
+                    $query = "ALTER TABLE $this->table_name $add_column;";
+                    mysqli_query($this->connection, $query);
+                }
+       
+    }
+
+    function insert($form_data)
     {
         // separate the array keys and values
 
@@ -33,45 +76,9 @@ class DB
             $values[] = $data['value'];
         }
 
+        $this->create_table($fields);
+
         // make the keys and values in string
-
-        // add a column for creating table
-        $create_fields = "id int(10),";
-        foreach ($fields as $field) {
-            if($field != "id"){
-                $create_fields .= "`$field` TEXT, ";
-            }
-        }
-        $create_fields .= "PRIMARY KEY(id)";
-
-        // create table if not exists
-        $query = "CREATE TABLE IF NOT EXISTS $table ($create_fields)";
-        mysqli_query($this->connection, $query);
-        
-
-        // check if the column is already exists or not 
-
-        $query = "SHOW COLUMNS from $table";
-        $results = mysqli_query($this-> connection, $query);
-
-        if($results){
-            $results = mysqli_fetch_all($results, MYSQLI_ASSOC);
-            $existing_column = array_column($results, 'Fields');
-            $new_column = array_diff($existing_column, $fields);
-        }
-
-        $add_column = "";
-        foreach($new_column as $column){
-            $add_column .= "ADD COLUMN $column,";
-        }
-        $add_column = rtrim($add_column, ",");
-
-        // add column if not exists
-        $query = "ALTER TABLE $table $add_column;";
-        mysqli_query($this->connection, $query);
-        
-
-        
         foreach($fields as $field){
             $update[] = "$field = VALUES($field)";
         }
@@ -82,7 +89,7 @@ class DB
 
 
 
-        $query = "INSERT INTO $table ($fields) VALUES ($values) ON DUPLICATE KEY UPDATE $update_query;";
+        $query = "INSERT INTO $this->table_name ($fields) VALUES ($values) ON DUPLICATE KEY UPDATE $update_query;";
         mysqli_query($this->connection, $query);
     }
 
@@ -95,24 +102,26 @@ class DB
 
 // }
 
-$obj = new DB("hostel", "localhost", "kechostel", "konguhostels");
 
 
 // post method
-if ($_SERVER['REQUEST_METHOD'] === "POST") {
+if ($_SERVER['REQUEST_METHOD'] === "POST") {    
     // get the request data
-
-    $tablename = $_POST['table_name'];
+    
+    $table_name = $_POST['table_name'];
     $form_data = $_POST['form_data'];
-    $obj->insert($tablename, $form_data);
+    
+    // create an object with the table_name if the object is not exists
+    $$table_name = ($$table_name === null) ? new DBDev("hostel", "localhost", "kechostel", "konguhostels", $table_name) : $$table_name;
+    
+    $$table_name ->  insert($form_data);
 
     $response = array(
         'success' => true,
-        'message' => 'Resource inserted successfully.'
+        'message' => 'Data inserted successfully.'
     );
     header('Content-Type: application/json');
     http_response_code(200);
-
     echo json_encode($response);
 
 }

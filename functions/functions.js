@@ -84,7 +84,7 @@ const check_value = (element, error = "Fill the input field", type = "class") =>
 
 // function to submit the form data and store it in the database
 
-const submit_form = async (formData, tableName, operation) => {
+const submit_form = async (formData, tableName, operation, success_message = "Success") => {
     
     // if the operation is update then make the operation put method
     operation = (operation === "update") ? "PUT" : operation;
@@ -104,7 +104,8 @@ const submit_form = async (formData, tableName, operation) => {
             method : "POST",
             data: data,
             success : (response) => {
-                console.log("data submitted " + response);
+                top_end_alert(response.message);
+                reset_form("form");
             },
             error : (xhr, status, error) => {
                 console.log(xhr + "  " + status + " " + error);
@@ -113,5 +114,24 @@ const submit_form = async (formData, tableName, operation) => {
     }catch(error){
         console.log(error);
     }
-    
+
+}
+
+
+// reset the form data
+const reset_form = (id) =>{
+    $(`#${id}`).trigger("reset");
+}
+
+// alert functions
+
+// top right corner
+const top_end_alert = (message) =>{
+    Swal.fire({
+        position: "top-end",
+        title: message,
+        showConfirmButton: !1,
+        timer: 1500,
+        buttonsStyling: !1,
+      });
 }
