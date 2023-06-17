@@ -11,6 +11,7 @@ $folder = implode('/', array_slice($path, 0, -1)) . '/';
 $file = !empty($path) ? end($path) : 'dashboard';
 $page = $folder . $file . ".php";
 
+// $page = $_GET["p1"].$_GET["p2"]."php";
 
 ?>
 <!DOCTYPE html>
@@ -20,7 +21,7 @@ $page = $folder . $file . ".php";
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title><?php echo $_GET["p2"]?></title>
     <?php
         include './files/styles.html';
     ?>
@@ -46,7 +47,7 @@ $page = $folder . $file . ".php";
 
     </div>
     <script>
-        document.title = "<?php echo $title; ?>";
+        // document.title = "<?php echo $title; ?>";
         $(".<?php echo $file; ?>").addClass("active");
 
     </script>

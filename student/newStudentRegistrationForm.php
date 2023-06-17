@@ -147,43 +147,40 @@
             // preventing the form submission
             event.preventDefault();
 
-            // removing error when the form submitting
-            remove_error();
+            // // // removing error when the form submitting
+            // remove_error();
 
-            //   validating the form data
+            // //   validating the form data
 
-            // check student name
-            check_value("student_name", "Enter student name", "input");
+            // // check student name
+            // check_value("student_name", "Enter student name", "input");
 
-            // check roll number
-            check_value("roll_number", "Enter roll number", "input");
+            // // check roll number
+            // check_value("roll_number", "Enter roll number", "input");
 
-            // check email id
-            check_value("email_id", "Enter college email");
+            // // check email id
+            // check_value("email_id", "Enter college email");
 
-            check_value("blood_group", "Select Blood Group", "select");
+            // check_value("blood_group", "Select Blood Group", "select");
 
-            check_value("branch", "Select branch");
+            // check_value("branch", "Select branch");
 
-            check_value("course", "Select Course");
+            // check_value("course", "Select Course");
 
-            check_value("password", "Enter the password");
+            // check_value("password", "Enter the password");
 
-            check_value("confirm_password", "Enter the confirm password");
+            // check_value("confirm_password", "Enter the confirm password");
 
-            password = $(".password").val();
-            confirm_password = $(".confirm_password").val();
-            if (confirm_password != "" && password != confirm_password) {
-                add_error("confirm_password", "Password does not match");
-            }
+            // password = $(".password").val();
+            // confirm_password = $(".confirm_password").val();
+            // if (confirm_password != "" && password != confirm_password) {
+            //     add_error("confirm_password", "Password does not match");
+            // }
 
-
-
-            // getting the form data and convert into the array
-            let formData = $("#form").serializeArray();
+            // // getting the form data and convert into the array
 
             if(!error){
-                submit_form(formData, "student_registration", "insert");
+                submit_form("student_registration", "update");
             }
         })
     })

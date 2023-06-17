@@ -6,7 +6,7 @@ class DBDev
     private $username;
     private $password;
     private $dbname;
-    private $table_name;
+    public $table_name;
     private $port;
     private $connection;
     public function __construct($dbname, $hostname = "localhost", $username = "root", $password = "", $table_name="", $port = 3306)
@@ -67,16 +67,15 @@ class DBDev
        
     }
 
+
     function insert($form_data)
     {
         // separate the array keys and values
 
-        foreach ($form_data as $data) {
-            $fields[] = $data['name'];
-            $values[] = $data['value'];
+        foreach ($form_data as $key => $value) {
+            $fields[] = $key;
+            $values[] = $value;
         }
-
-        $this->create_table($fields);
 
         // make the keys and values in string
         foreach($fields as $field){
@@ -90,7 +89,36 @@ class DBDev
 
 
         $query = "INSERT INTO $this->table_name ($fields) VALUES ($values) ON DUPLICATE KEY UPDATE $update_query;";
-        mysqli_query($this->connection, $query);
+        $result = mysqli_query($this->connection, $query);
+        if(!$result){
+            $this->create_table($fields);
+            mysqli_query($this->connection, $query);
+        }
+    }
+
+    function update($id, $form_data){
+
+        $data = "";
+        foreach($form_data as $key => $value){
+            $data .= $key." = '".$value."' ,";
+        }
+        $data = rtrim($data, ",");
+
+        $query = "UPDATE $this->table_name SET $data WHERE id='$id'";
+        $result = mysqli_query($this->connection, $query);
+
+        // create table if the update query has any issues
+        if(!$result){
+            $fields = array_keys($form_data);
+            $fields = implode(", ", $fields);
+            $this->create_table($fields);
+            mysqli_query($this->connection, $query);
+        }
+    }
+
+    function delete($id){
+            $query = "DELETE FROM $this->table_name WHERE id = $id";
+            mysqli_query($this->connection, $query);
     }
 
 }
@@ -108,8 +136,8 @@ class DBDev
 if ($_SERVER['REQUEST_METHOD'] === "POST") {    
     // get the request data
     
-    $table_name = $_POST['table_name'];
-    $form_data = $_POST['form_data'];
+    $table_name = $_POST['tableName'];
+    $form_data = $_POST['formData'];
     
     // create an object with the table_name if the object is not exists
     $$table_name = ($$table_name === null) ? new DBDev("hostel", "localhost", "kechostel", "konguhostels", $table_name) : $$table_name;
@@ -118,7 +146,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
     $response = array(
         'success' => true,
-        'message' => 'Data inserted successfully.'
+        'message' => 'Data inserted successfully.',
+        'output' => $form_data
     );
     header('Content-Type: application/json');
     http_response_code(200);
@@ -128,14 +157,51 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
 
 // update method
-// if ($_SERVER['REQUEST_METHOD'] === "PUT") {
+if($_SERVER["REQUEST_METHOD"] === "PUT"){
+    parse_str(file_get_contents("php://input"), $data);
+    // $data = file_get_contents("php://input");
+    $table_name = $data["tableName"];
+    $form_data = $data["formData"];
+    $id = $data["id"];
+    
+    $$table_name = ($$table_name === null) ? new DBDev("hostel", "localhost", "kechostel", "konguhostels") : $$table_name;
+    $$table_name  -> table_name = $table_name;
 
-// }
+    $query = $$table_name -> update($id, $form_data);
+
+
+    $response = array(
+        'success' => true,
+        'message' => "Data updated successfully",
+        'output' => $data
+        );
+
+    header("Content-Type:application/json");
+    http_response_code(200);
+    echo json_encode($response);
+}
 
 // // delete method
-// if ($_SERVER['REQUEST_METHOD'] === "DELETE") {
+if ($_SERVER['REQUEST_METHOD'] === "DELETE") {
 
-// }
+    // get the data from the api call
+    parse_str(file_get_contents("php://input"), $data);
+    $table_name = $data["tableName"];
+    $id = $data["id"];
+
+    $$table_name = ($$table_name === null) ? new DBDev("hostel", "localhost", "kechostel", "konguhostels", $table_name) : $$table_name;
+    $$table_name -> delete($id);
+
+    $response = array(
+        'success' => true,
+        'message' => 'Data deleted successfully',
+        'output' => $data
+    );
+
+    header("Content-Type:application/json");
+    http_response_code(200);
+    echo json_encode($response);
+}
 
 
 
