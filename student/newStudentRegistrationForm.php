@@ -180,7 +180,7 @@
             // // getting the form data and convert into the array
 
             if(!error){
-                submit_form("student_registration", "update");
+                submit_form("student_registration", "insert");
             }
         })
     })

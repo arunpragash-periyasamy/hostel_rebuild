@@ -72,10 +72,10 @@ const check_value = (
 
 // function to submit the form data and store it in the database
 
-const submit_form = async (tableName, operation, formid = "form") => {
+const submit_form = async (tableName, operation = "insert", formId = "form") => {
     operation = operation.toLowerCase();
     
-    let formData = $(`#${formid}`).serializeArray();
+    let formData = $(`#${formId}`).serializeArray();
     // remove the empty fields
     formData = formData.filter((item) => {
         if (item.value != "") {
@@ -92,6 +92,7 @@ const submit_form = async (tableName, operation, formid = "form") => {
 
     let data = {};
     data.tableName = tableName;
+    console.log(formData);
 
     switch (operation) {
         case "insert":
@@ -102,9 +103,9 @@ const submit_form = async (tableName, operation, formid = "form") => {
                     method: "POST",
                     data: data,
                     success: (response) => {
-                        top_end_alert(response.message);
-                        reset_form("form");
-                        console.log(response.output);
+                        // top_end_alert(response.message);
+                        // reset_form(formId);
+                        console.log(response);
                     },
                     error: (xhr, status, error) => {
                         console.log(xhr + "  " + status + " " + error);
@@ -123,7 +124,7 @@ const submit_form = async (tableName, operation, formid = "form") => {
                     method : "DELETE",
                     data : data,
                     success : (response) => {
-                        reset_form("form");
+                        reset_form(formId);
                         top_end_alert(response.message);
                         console.log(response);
                     },
@@ -148,6 +149,7 @@ const submit_form = async (tableName, operation, formid = "form") => {
                 success : (response) => {
                     console.log(response);
                     top_end_alert(response.message);
+                    reset_form(formId);
                 },
                 error : (xhr, status, error) => {
                     console.log(xhr, error);
