@@ -86,39 +86,39 @@
 
           student_name = $("#student_name").val();
           if(student_name == ""){
-            add_error("student_name", "Enter the Student Name");
+            addError("student_name", "Enter the Student Name");
           }
 
           roll_number = $("#roll_number").val();
           if(roll_number == ""){
-            add_error("roll_number", "Enter the roll number");
+            addError("roll_number", "Enter the roll number");
           }
 
           email = $("#email").val();
           if(email == ""){
-            add_error("email", "Enter the email id");
+            addError("email", "Enter the email id");
           }
 
           if(!valid_email(email)){
-            add_error("email", "Enter a valid college mail id")
+            addError("email", "Enter a valid college mail id")
           }
 
           password = $("#password").val();
           if(password == ""){
-            add_error("password", "Enter the password");
+            addError("password", "Enter the password");
           }
 
           if(!valid_password(password)){
-            add_error("password","week password");
+            addError("password","week password");
           }
 
           confirm_password = $("#confirm_password").val();
           if(confirm_password == ""){
-            add_error("confirm_password", "Enter the password");
+            addError("confirm_password", "Enter the password");
           }
 
           if(password !== confirm_password){
-            add_error("confirm_password", "Password does not match");
+            addError("confirm_password", "Password does not match");
           }
 
         })

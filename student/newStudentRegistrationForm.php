@@ -148,39 +148,39 @@
             event.preventDefault();
 
             // // // removing error when the form submitting
-            // remove_error();
+            // removeError();
 
             // //   validating the form data
 
             // // check student name
-            // check_value("student_name", "Enter student name", "input");
+            // checkValue("student_name", "Enter student name", "input");
 
             // // check roll number
-            // check_value("roll_number", "Enter roll number", "input");
+            // checkValue("roll_number", "Enter roll number", "input");
 
             // // check email id
-            // check_value("email_id", "Enter college email");
+            // checkValue("email_id", "Enter college email");
 
-            // check_value("blood_group", "Select Blood Group", "select");
+            // checkValue("blood_group", "Select Blood Group", "select");
 
-            // check_value("branch", "Select branch");
+            // checkValue("branch", "Select branch");
 
-            // check_value("course", "Select Course");
+            // checkValue("course", "Select Course");
 
-            // check_value("password", "Enter the password");
+            // checkValue("password", "Enter the password");
 
-            // check_value("confirm_password", "Enter the confirm password");
+            // checkValue("confirm_password", "Enter the confirm password");
 
             // password = $(".password").val();
             // confirm_password = $(".confirm_password").val();
             // if (confirm_password != "" && password != confirm_password) {
-            //     add_error("confirm_password", "Password does not match");
+            //     addError("confirm_password", "Password does not match");
             // }
 
             // // getting the form data and convert into the array
 
             if(!error){
-                submit_form("student_registration", "insert");
+                submitForm("student_registration", "insert");
             }
         })
     })

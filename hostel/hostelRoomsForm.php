@@ -20,7 +20,7 @@
                                 <h5 class="card-title">Add Hostel Allocating Form</h5>
                             </div>
                             <div class="card-body">
-                                <form action="#" id="hostelAdmissionForm">
+                                <form action="#" id="form">
                                     <div class="row">
                                         <div class="col-xl-6">
 
@@ -28,7 +28,7 @@
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">Hostel Name</label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control" />
+                                                    <input type="text" class="form-control" name="hostel_name" value="kamban"/>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -53,20 +53,20 @@
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">Number of Floors</label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control" />
+                                                    <input type="text" class="form-control"  name="floor" value="floor" />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">Number of Rooms</label>
                                                 <div class="col-lg-9">
-                                                    <input type="password" class="form-control" />
+                                                    <input type="text" class="form-control"   name="no_of_rooms" value="no_of_rooms" />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">Student Capacity (for a single
+                                                <label class="col-lg-3 col-form-label">Capacity (for a single
                                                     room)</label>
                                                 <div class="col-lg-9">
-                                                    <input type="password" class="form-control" />
+                                                    <input type="text" class="form-control"   name="capacity" value="capacity" />
                                                 </div>
                                             </div>
                                         </div>
@@ -76,33 +76,36 @@
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">Depty Warden Name</label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control" />
+                                                    <input type="text" class="form-control" name="deputy_warden" value="deputy_warden" />
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">Manager Name</label>
+                                                <label class="col-lg-3 col-form-label">Manager<, "manager_contact"/label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control" />
+                                                    $(document).ready(()=>{
+                                                        submitData(data);
+                                                    })
+                                                    <input type="text" class="form-control" name="manager" value="manager" />
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">Contact Number</label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control" />
+                                                    <input type="text" class="form-control" name="manager_contact" value="manager_contact" />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">Warden Name</label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control" />
+                                                    <input type="text" class="form-control" name="warden" value="warden" />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label">Warden Contact</label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" class="form-control" />
+                                                    <input type="text" class="form-control" name="warden_contact" value="warden_contact" />
                                                 </div>
                                             </div>
                                         </div>
@@ -207,25 +210,33 @@
 
     <script>
 
-    $(document).ready(function() {
-        // activate the sidebar
-        $(".header").removeClass("active");
-        $(".hostelRooms").addClass("active");
-    });
-    $(document).ready(function() {
+    // $(document).ready(function() {
+    //     // activate the sidebar
+    //     $(".header").removeClass("active");
+    //     $(".hostelRooms").addClass("active");
+    // });
+    // $(document).ready(function() {
 
-        // adding normal room detail with floor wise information
-        var floorContent = $("#floorContent").html();
-        $("[name=addFloorContentButton]").on('click', function() {
-            $("#addFloorContent").append(floorContent);
-        });
+    //     // adding normal room detail with floor wise information
+    //     var floorContent = $("#floorContent").html();
+    //     $("[name=addFloorContentButton]").on('click', function() {
+    //         $("#addFloorContent").append(floorContent);
+    //     });
 
-        // adding special room information
-        var specialRoomContent = $("#specialRoomContent").html();
-        $("[name=addSpecialRoomContentButton]").on('click', function() {
-            $("#addSpecialRoomContent").append(specialRoomContent);
-        });
+    //     // adding special room information
+    //     var specialRoomContent = $("#specialRoomContent").html();
+    //     $("[name=addSpecialRoomContentButton]").on('click', function() {
+    //         $("#addSpecialRoomContent").append(specialRoomContent);
+    //     });
 
 
-    });
+    // });
+
+    data = {
+        hostel : ["hostel_name", "no_of_rooms", "floor", "capacity"],
+        incharge : ["deputy_warden", "manager", "manager_contact"]
+    }
+    $(document).ready(()=>{
+        submitData(data);
+    })
     </script>

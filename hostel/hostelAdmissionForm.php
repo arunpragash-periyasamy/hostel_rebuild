@@ -381,33 +381,33 @@
         event.preventDefault();
 
         // remove error if any
-        remove_error();
+        removeError();
 
         
         // check for the input fields
-        check_value("student_name", "Enter the student name");
-        check_value("roll_number", "Enter the roll number");
-        // check_value("date_of_birth", "Enter the date of birth");
-        // check_value("blood_group", "Enter the Blood Group");
-        // check_value("course", "Enter the course");
-        // check_value("branch", "Enter the branch");
-        // check_value("year", "Enter the year");
-        // check_value("email_id", "Enter the email id");
-        // check_value("mobile_number", "Enter the mobile number");
-        // check_value("parent_name", "Enter the parent name");
-        // check_value("parent_mobile_number", "Enter the parent mobile number");
-        // check_value("parent_occupation", "Enter the parent occupation");
-        // check_value("parent_relationship", "Select the parent relationship");
-        // check_value("parent_address_line_1", "Enter the parent address line 1");
-        // check_value("parent_address_line_2", "Enter the parent address line 2");
-        // check_value("parent_address_line_3", "Enter the parent address line 3");
-        // check_value("parent_state", "Enter the parent state");
-        // check_value("parent_city", "Enter the parent city");
-        // check_value("parent_pin_code", "Enter the parent pin code");
-        // check_value("kvb_account_number", "Enter the account number");
+        checkValue("student_name", "Enter the student name");
+        checkValue("roll_number", "Enter the roll number");
+        // checkValue("date_of_birth", "Enter the date of birth");
+        // checkValue("blood_group", "Enter the Blood Group");
+        // checkValue("course", "Enter the course");
+        // checkValue("branch", "Enter the branch");
+        // checkValue("year", "Enter the year");
+        // checkValue("email_id", "Enter the email id");
+        // checkValue("mobile_number", "Enter the mobile number");
+        // checkValue("parent_name", "Enter the parent name");
+        // checkValue("parent_mobile_number", "Enter the parent mobile number");
+        // checkValue("parent_occupation", "Enter the parent occupation");
+        // checkValue("parent_relationship", "Select the parent relationship");
+        // checkValue("parent_address_line_1", "Enter the parent address line 1");
+        // checkValue("parent_address_line_2", "Enter the parent address line 2");
+        // checkValue("parent_address_line_3", "Enter the parent address line 3");
+        // checkValue("parent_state", "Enter the parent state");
+        // checkValue("parent_city", "Enter the parent city");
+        // checkValue("parent_pin_code", "Enter the parent pin code");
+        // checkValue("kvb_account_number", "Enter the account number");
 
         if(!error){
-            submit_form("student_admission");
+            submitForm("student_admission");
         }
 
     });
